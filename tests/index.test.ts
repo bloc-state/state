@@ -1,4 +1,4 @@
-import { isBlocStateInstance } from "../src"
+import { isBlocStateInstance } from "../src/state"
 import { CounterState } from "./helpers/counter/counter.state"
 
 describe("BlocState", () => {

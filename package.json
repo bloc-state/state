@@ -38,5 +38,12 @@
   },
   "lint-staged": {
     "*.{js,ts,css,md}": "prettier --write"
+  },
+   "tsup": {
+    "entry": ["src/index.ts"],
+    "splitting": true,
+    "sourcemap": true,
+    "dts": true,
+    "clean": true
   }
 }

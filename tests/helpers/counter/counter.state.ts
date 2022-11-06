@@ -1,4 +1,4 @@
-import { BlocState } from "../../../src"
+import { BlocState } from "../../../src/state"
 
 export class CounterState extends BlocState<number> {}
 export class CounterIncrementState extends CounterState {}

@@ -1,4 +1,4 @@
-import { BlocState } from "."
+import { BlocState } from "./state"
 
 export type BlocStateDataType<T> = T extends BlocState<infer U> ? U : T
 
