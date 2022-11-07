@@ -70,6 +70,7 @@ jobs:
             ${{ runner.os }}-
       - run: npm i -g pnpm
       - run: pnpm i
+      - run: pnpm i --save-dev @semantic-release/changelog @semantic-release/git
       - run: pnpx semantic-release --branches main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
