@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/bloc-state/state/compare/v1.0.3...v1.0.4) (2022-11-08)
+
+
+### Bug Fixes
+
+* **dep:** added changelog and git semantic-release plugins ([0cb81dc](https://github.com/bloc-state/state/commit/0cb81dc95c8db30fc29b1f3cae4814879c734005))
+* **dep:** removed rxjs from peer dependencies ([4ceba84](https://github.com/bloc-state/state/commit/4ceba844592e323db2ac4504817d77ca9cf577af))
+
 ## [1.0.3](https://github.com/bloc-state/state/compare/v1.0.2...v1.0.3) (2022-11-08)
 
 
