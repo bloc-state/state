@@ -1,5 +1,7 @@
+import { WritableDraft } from "immer/dist/internal"
 import { BlocStateStatus, isBlocStateInstance } from "../src"
 import { CounterState } from "./helpers/counter/counter.state"
+import { Todo, TodoState } from "./helpers/todo/todo.state"
 
 describe("BlocState", () => {
   let state: CounterState
@@ -29,6 +31,32 @@ describe("BlocState", () => {
       expect(readyState2.status).toBe(BlocStateStatus.ready)
       expect(readyState2.data).toBe(3)
       expect(readyState2 === readyState).toBe(false)
+
+      const referenceTypeState = new TodoState({
+        id: 0,
+        title: "go to work",
+      })
+
+      expect(referenceTypeState).toBeInstanceOf(TodoState)
+      expect(referenceTypeState.data.id).toBe(0)
+      expect(referenceTypeState.data.title).toBe("go to work")
+
+      const referenceTypeState2 = referenceTypeState.ready()
+      expect(referenceTypeState !== referenceTypeState2)
+      expect(referenceTypeState2.data !== referenceTypeState.data)
+
+      const primitiveState = state.ready(2)
+      expect(primitiveState.data).toBe(2)
+      expect(primitiveState.status).toBe(BlocStateStatus.ready)
+      expect(primitiveState !== state).toBe(true)
+
+      const nonPrimitiveWithoutFunctionState = referenceTypeState.ready(
+        (todo: WritableDraft<Todo>) => {
+          todo.id = 5
+        },
+      )
+
+      expect(nonPrimitiveWithoutFunctionState.data !== referenceTypeState.data)
     })
   })
 
