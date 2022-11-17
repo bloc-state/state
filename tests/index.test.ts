@@ -7,7 +7,7 @@ describe("BlocState", () => {
   let state: CounterState
 
   beforeEach(() => {
-    state = new CounterState()
+    state = new CounterState(0)
   })
 
   describe("BlocState creation", () => {
