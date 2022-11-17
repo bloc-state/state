@@ -1,5 +1,6 @@
 import produce, { Draft } from "immer"
 import { BlocStateStatus } from "./types"
+import { isPrimitive } from "./util"
 
 export class BlocState<T = any> {
   constructor(data: T) {
@@ -15,11 +16,39 @@ export class BlocState<T = any> {
 
   readonly isBlocStateInstance = true
 
-  ready(copy?: (data: Draft<T>) => void): typeof this {
+  ready(copy?: ((data: T) => T) | ((data: Draft<T>) => void) | T): typeof this {
     const ctor = this.constructor as new (data: T) => typeof this
-    const newState = new ctor(produce(this.data, copy ?? (() => {})))
-    newState.status = BlocStateStatus.ready
-    return newState
+    const primitive = isPrimitive(this.data)
+    const copyExists = copy != null
+
+    if (!copyExists && primitive) {
+      const newState = new ctor(this.data)
+      newState.status = BlocStateStatus.ready
+      return newState
+    } else if (!copyExists) {
+      const newState = new ctor(produce(this.data, () => {}))
+      newState.status = BlocStateStatus.ready
+      return newState
+    }
+
+    if (primitive && typeof copy === "function") {
+      const _copy = copy as (data: T) => T
+      const newState = new ctor(_copy(this.data))
+      newState.status = BlocStateStatus.ready
+      return newState
+    }
+
+    if (primitive) {
+      const data = copy as T
+      const newState = new ctor(data)
+      newState.status = BlocStateStatus.ready
+      return newState
+    } else {
+      const _copy = copy as (data: Draft<T>) => void
+      const newState = new ctor(produce(this.data, _copy))
+      newState.status = BlocStateStatus.ready
+      return newState
+    }
   }
 
   loading(): typeof this {
