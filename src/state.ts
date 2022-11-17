@@ -16,8 +16,8 @@ export class BlocState<T = any> {
 
   readonly isBlocStateInstance = true
 
-  ready(copy?: ((data: T) => T) | ((data: Draft<T>) => void) | T): typeof this {
-    const ctor = this.constructor as new (data: T) => typeof this
+  ready(copy?: ((data: T) => T) | ((data: Draft<T>) => void) | T): this {
+    const ctor = this.constructor as new (data: T) => this
     const primitive = isPrimitive(this.data)
     const copyExists = copy != null
 
@@ -51,15 +51,15 @@ export class BlocState<T = any> {
     }
   }
 
-  loading(): typeof this {
-    const ctor = this.constructor as new (data: T) => typeof this
+  loading(): this {
+    const ctor = this.constructor as new (data: T) => this
     const newState = new ctor(produce(this.data, () => {}))
     newState.status = BlocStateStatus.loading
     return newState
   }
 
-  failed(error?: Error): typeof this {
-    const ctor = this.constructor as new (data: T) => typeof this
+  failed(error?: Error): this {
+    const ctor = this.constructor as new (data: T) => this
     const newState = new ctor(produce(this.data, () => {}))
     if (error) newState.error = error
     newState.status = BlocStateStatus.failed
