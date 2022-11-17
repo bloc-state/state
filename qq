@@ -1,0 +1,171 @@
+[33mcommit bb7cb0c61ce0be86fe3c1415984c8ec8e8f92893[m[33m ([m[1;36mHEAD -> [m[1;32mbeta[m[33m)[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Wed Nov 16 19:08:55 2022 -0800
+
+    ci(semantic-release): remove --branches flag from execution [skip ci]
+
+[33mcommit 7fc75d9b3b58cf520ebdc3765be2efa2b880794c[m[33m ([m[1;31morigin/beta[m[33m)[m
+Merge: 0f5fa4d 49fc0b2
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Wed Nov 16 19:00:30 2022 -0800
+
+    Merge branch 'main' into beta
+
+[33mcommit 49fc0b251aef9c3a932921dca97272b1dbc69351[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Wed Nov 16 18:59:35 2022 -0800
+
+    ci: added beta branch to semantic-release [skip-ci]
+
+[33mcommit 0f5fa4d96771f23b2ffe255765876aabc384d9e7[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Wed Nov 16 17:10:13 2022 -0800
+
+     feat: updated API
+    
+        BREAKING CHANGE: State will now have a new property named status to identify its
+        finite state, immer will now be integrated into the library and is now a
+        hard dependency. State will no longer use static factory methods.
+        Instantiating a state instance will set it to intial status. New state
+        instances can be created using prototype methods on a state instance [ready, failed,
+        loading]. These 3 methods will return a new immutable state instance.
+
+[33mcommit c1a8b81afa724defa1f2cde29a96c894c9b810dd[m
+Merge: c9d5e11 ba3995c
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 21:14:00 2022 -0800
+
+    Merge branch 'main' of https://github.com/bloc-state/state
+
+[33mcommit c9d5e117dd3e9f557e53927a2fd6b8c2dbcfda6f[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 21:13:42 2022 -0800
+
+    build: added sideEffects false to package.json [skip ci]
+
+[33mcommit ba3995c3890afec44c9fd3ffbfc48619d1a4c90c[m[33m ([m[1;33mtag: v1.0.4[m[33m)[m
+Author: semantic-release-bot <semantic-release-bot@martynus.net>
+Date:   Tue Nov 8 05:07:32 2022 +0000
+
+    chore(release): set `package.json` to 1.0.4 [skip ci]
+    
+    ## [1.0.4](https://github.com/bloc-state/state/compare/v1.0.3...v1.0.4) (2022-11-08)
+    
+    ### Bug Fixes
+    
+    * **dep:** added changelog and git semantic-release plugins ([0cb81dc](https://github.com/bloc-state/state/commit/0cb81dc95c8db30fc29b1f3cae4814879c734005))
+    * **dep:** removed rxjs from peer dependencies ([4ceba84](https://github.com/bloc-state/state/commit/4ceba844592e323db2ac4504817d77ca9cf577af))
+
+[33mcommit 0cb81dc95c8db30fc29b1f3cae4814879c734005[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 21:05:14 2022 -0800
+
+    fix(dep): added changelog and git semantic-release plugins
+
+[33mcommit 6eaca404deb512848717e7e80104b26c63dc8b25[m
+Merge: 4ceba84 1e4416a
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 21:02:34 2022 -0800
+
+    Merge branch 'main' of https://github.com/bloc-state/state
+
+[33mcommit 4ceba844592e323db2ac4504817d77ca9cf577af[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 21:02:17 2022 -0800
+
+    fix(dep): removed rxjs from peer dependencies
+
+[33mcommit 1e4416ae9f68624a0b5e45c5b4e650e6ea23db38[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 17:17:57 2022 -0800
+
+    ci: removed dependabot.yml
+    
+    removing dependabot.yml in favor of renovate
+
+[33mcommit 761fc7c263eea19830f11a955eced58b25b2ecba[m[33m ([m[1;33mtag: v1.0.3[m[33m)[m
+Author: semantic-release-bot <semantic-release-bot@martynus.net>
+Date:   Tue Nov 8 00:03:03 2022 +0000
+
+    chore(release): set `package.json` to 1.0.3 [skip ci]
+    
+    ## [1.0.3](https://github.com/bloc-state/state/compare/v1.0.2...v1.0.3) (2022-11-08)
+    
+    ### Bug Fixes
+    
+    * **build:** add typescript declaration file to build ([fbd2b29](https://github.com/bloc-state/state/commit/fbd2b2987ff61140766375b1806443efe2057069))
+    * **dep:** removed unused dev dependencies ([d6d22e5](https://github.com/bloc-state/state/commit/d6d22e59433881ea42b76eb17ef3811e28b030e7))
+
+[33mcommit d6d22e59433881ea42b76eb17ef3811e28b030e7[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 15:56:03 2022 -0800
+
+    fix(dep): removed unused dev dependencies
+
+[33mcommit 25bf8bf78508935410510028869264703649aa70[m
+Merge: fbd2b29 207d135
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 15:49:33 2022 -0800
+
+    Merge branch 'main' of https://github.com/bloc-state/state
+
+[33mcommit fbd2b2987ff61140766375b1806443efe2057069[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Mon Nov 7 15:49:11 2022 -0800
+
+    fix(build): add typescript declaration file to build
+
+[33mcommit 207d135a2316442f38ecbade49cf16e7d775a7e8[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sun Nov 6 23:17:14 2022 -0800
+
+    ci: create dependabot.yml
+
+[33mcommit d396172ed28d081e1160a97fd39b2ef6ec2be4f0[m[33m ([m[1;33mtag: v1.0.2[m[33m)[m
+Author: semantic-release-bot <semantic-release-bot@martynus.net>
+Date:   Mon Nov 7 06:25:06 2022 +0000
+
+    chore(release): set `package.json` to 1.0.2 [skip ci]
+    
+    ## [1.0.2](https://github.com/bloc-state/state/compare/v1.0.1...v1.0.2) (2022-11-07)
+    
+    ### Bug Fixes
+    
+    * **ci:** add package.json to semantic-release/git assets ([5d86d4f](https://github.com/bloc-state/state/commit/5d86d4fcd55552c411916269cbd2db41204d4a29))
+    * **ci:** added newly needed dependencies for ci ([0c8a04a](https://github.com/bloc-state/state/commit/0c8a04adf58d51faf5e4745fe47eebf5b45a5e27))
+
+[33mcommit 0c8a04adf58d51faf5e4745fe47eebf5b45a5e27[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sun Nov 6 22:22:54 2022 -0800
+
+    fix(ci): added newly needed dependencies for ci
+
+[33mcommit 5d86d4fcd55552c411916269cbd2db41204d4a29[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sun Nov 6 22:20:52 2022 -0800
+
+    fix(ci): add package.json to semantic-release/git assets
+
+[33mcommit b65839b7a3d15e408f83a0e6ced2f04943c49e0c[m[33m ([m[1;33mtag: v1.0.1[m[33m)[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sun Nov 6 01:51:43 2022 -0700
+
+    fix: typescript and tsup config
+
+[33mcommit 1d7c66a61d7cec81f8afda742cb725554b9c865f[m[33m ([m[1;33mtag: v1.0.0[m[33m)[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sat Nov 5 21:56:48 2022 -0700
+
+    feat: initial commit
+
+[33mcommit 8439fec1ddbc6c5bae5d60d44574d7f1b7746b00[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sat Nov 5 18:59:26 2022 -0700
+
+    added: library and tests
+
+[33mcommit 2426261166a796cbf783800ce2c2988f181c619d[m
+Author: Jacob Tipp <jacobtipp@gmail.com>
+Date:   Sat Nov 5 15:41:55 2022 -0700
+
+    Initial commit

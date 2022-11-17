@@ -1,122 +1,40 @@
-import {
-  StatePayload,
-  BlocStateInstanceType,
-  BlocStateDataType,
-  InitialWithData,
-  ReadyWithData,
-  Loading,
-  Failed,
-  FailedWithError,
-  LoadingWithData,
-} from "./types"
+import produce, { Draft } from "immer"
+import { BlocStateStatus } from "./types"
 
-export abstract class BlocState<T = any> {
+export class BlocState<T = any> {
+  constructor(data: T) {
+    this.data = data
+    this.status = BlocStateStatus.initial
+  }
+
+  status: BlocStateStatus
+  error?: Error
+  data: T
+
   readonly blocStateName = this.constructor.name
+
   readonly isBlocStateInstance = true
 
-  constructor(public payload: StatePayload<T>) {}
-
-  static init<
-    State extends BlocStateInstanceType,
-    Data extends BlocStateDataType<State>,
-  >(this: new (payload: InitialWithData<Data>) => State, data: Data): State {
-    return new this({
-      initial: true,
-      hasError: false,
-      isFailure: false,
-      error: undefined,
-      isReady: true,
-      loading: false,
-      hasData: true,
-      data,
-    })
+  ready(copy?: (data: Draft<T>) => void): typeof this {
+    const ctor = this.constructor as new (data: T) => typeof this
+    const newState = new ctor(produce(this.data, copy ?? (() => {})))
+    newState.status = BlocStateStatus.ready
+    return newState
   }
 
-  static ready<
-    State extends BlocStateInstanceType,
-    Data extends BlocStateDataType<State>,
-  >(this: new (payload: ReadyWithData<Data>) => State, data: Data): State {
-    return new this({
-      initial: false,
-      hasError: false,
-      isFailure: false,
-      error: undefined,
-      isReady: true,
-      loading: false,
-      hasData: true,
-      data,
-    })
+  loading(): typeof this {
+    const ctor = this.constructor as new (data: T) => typeof this
+    const newState = new ctor(produce(this.data, () => {}))
+    newState.status = BlocStateStatus.loading
+    return newState
   }
 
-  static loading<
-    State extends BlocStateInstanceType,
-    Data extends BlocStateDataType<State>,
-  >(this: new (payload: Loading) => State, data?: Data): State
-
-  static loading<
-    State extends BlocStateInstanceType,
-    Data extends BlocStateDataType<State>,
-  >(
-    this: new (payload: Loading | LoadingWithData<Data>) => State,
-    data?: Data,
-  ): State {
-    if (data !== undefined) {
-      return new this({
-        initial: false,
-        hasError: false,
-        error: undefined,
-        hasData: true,
-        loading: true,
-        isReady: false,
-        data: data,
-        isFailure: false,
-      })
-    } else {
-      return new this({
-        initial: false,
-        hasError: false,
-        error: undefined,
-        hasData: false,
-        loading: true,
-        isReady: false,
-        data: undefined,
-        isFailure: false,
-      })
-    }
-  }
-
-  static failed<State extends BlocStateInstanceType, E extends Error>(
-    this: new (payload: Failed) => State,
-    error?: E,
-  ): State
-
-  static failed<State extends BlocStateInstanceType, E extends Error>(
-    this: new (payload: Failed | FailedWithError<E>) => State,
-    error?: E,
-  ): State {
-    if (error !== undefined) {
-      return new this({
-        initial: false,
-        hasError: true,
-        error: error,
-        hasData: false,
-        isReady: false,
-        loading: false,
-        data: undefined,
-        isFailure: true,
-      })
-    } else {
-      return new this({
-        initial: false,
-        hasError: false,
-        error: undefined,
-        isReady: false,
-        hasData: false,
-        loading: false,
-        data: undefined,
-        isFailure: true,
-      })
-    }
+  failed(error?: Error): typeof this {
+    const ctor = this.constructor as new (data: T) => typeof this
+    const newState = new ctor(produce(this.data, () => {}))
+    if (error) newState.error = error
+    newState.status = BlocStateStatus.failed
+    return newState
   }
 }
 
