@@ -1,3 +1,20 @@
+# [2.0.0-beta.1](https://github.com/bloc-state/state/compare/v1.0.4...v2.0.0-beta.1) (2022-11-17)
+
+
+### Features
+
+* updated API ([f3a26c1](https://github.com/bloc-state/state/commit/f3a26c17ca77a32129b2a8403a9374cc8969abdb))
+
+
+### BREAKING CHANGES
+
+* State will now have a new property named status to identify its
+        finite state, immer will now be integrated into the library and is now a
+        hard dependency. State will no longer use static factory methods.
+        Instantiating a state instance will set it to intial status. New state
+        instances can be created using prototype methods on a state instance [ready, failed,
+        loading]. These 3 methods will return a new immutable state instance.
+
 ## [1.0.4](https://github.com/bloc-state/state/compare/v1.0.3...v1.0.4) (2022-11-08)
 
 
