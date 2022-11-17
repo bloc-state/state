@@ -40,5 +40,8 @@
   },
   "lint-staged": {
     "*.{js,ts,css,md}": "prettier --write"
+  },
+  "dependencies": {
+    "immer": "^9.0.16"
   }
 }
