@@ -1,3 +1,10 @@
+# [2.0.0-beta.4](https://github.com/bloc-state/state/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2022-11-19)
+
+
+### Features
+
+* made changes to handle encapsulation properly ([cbdc5f7](https://github.com/bloc-state/state/commit/cbdc5f7e767238b09131ad0146db5440ed3d392e))
+
 # [2.0.0-beta.3](https://github.com/bloc-state/state/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-11-17)
 
 
