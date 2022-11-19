@@ -1,7 +1,6 @@
-import { WritableDraft } from "immer/dist/internal"
-import { BlocStateStatus, isBlocStateInstance } from "../src"
+import { isBlocStateInstance } from "../src"
 import { CounterState } from "./helpers/counter/counter.state"
-import { Todo, TodoState } from "./helpers/todo/todo.state"
+import { TodoState } from "./helpers/todo/todo.state"
 
 describe("BlocState", () => {
   let state: CounterState
@@ -13,22 +12,23 @@ describe("BlocState", () => {
   describe("BlocState creation", () => {
     it("should set state to initial", () => {
       expect(state).toBeInstanceOf(CounterState)
-      expect(state.status).toBe(BlocStateStatus.initial)
+      expect(state.status).toBe("initial")
       expect(state.data).toBe(0)
     })
   })
 
   describe("BlocState.ready", () => {
     it("should set state to ready", () => {
-      const readyState = state.ready((data) => data + 3)
+      const readyState = state.ready(state.data + 3)
       expect(readyState).toBeInstanceOf(CounterState)
-      expect(readyState.status).toBe(BlocStateStatus.ready)
+      expect(readyState.status).toBe("ready")
       expect(readyState.data).toBe(3)
       expect(readyState === state).toBe(false)
 
       const readyState2 = readyState.ready()
+      console.log(readyState2)
       expect(readyState2).toBeInstanceOf(CounterState)
-      expect(readyState2.status).toBe(BlocStateStatus.ready)
+      expect(readyState2.status).toBe("ready")
       expect(readyState2.data).toBe(3)
       expect(readyState2 === readyState).toBe(false)
 
@@ -47,16 +47,14 @@ describe("BlocState", () => {
 
       const primitiveState = state.ready(2)
       expect(primitiveState.data).toBe(2)
-      expect(primitiveState.status).toBe(BlocStateStatus.ready)
+      expect(primitiveState.status).toBe("ready")
       expect(primitiveState !== state).toBe(true)
 
-      const nonPrimitiveWithoutFunctionState = referenceTypeState.ready(
-        (todo: WritableDraft<Todo>) => {
-          todo.id = 5
-        },
-      )
+      const nonPrimitiveWithFunctionState = referenceTypeState.ready((todo) => {
+        todo.id = 5
+      })
 
-      expect(nonPrimitiveWithoutFunctionState.data !== referenceTypeState.data)
+      expect(nonPrimitiveWithFunctionState.data !== referenceTypeState.data)
     })
   })
 
@@ -64,7 +62,7 @@ describe("BlocState", () => {
     it("should set state to loading", () => {
       const loading = state.loading()
       expect(loading).toBeInstanceOf(CounterState)
-      expect(loading.status).toBe(BlocStateStatus.loading)
+      expect(loading.status).toBe("loading")
       expect(loading.data).toBe(0)
       expect(loading === state).toBe(false)
     })

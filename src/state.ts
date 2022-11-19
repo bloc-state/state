@@ -1,68 +1,70 @@
 import produce, { Draft } from "immer"
 import { BlocStateStatus } from "./types"
-import { isPrimitive } from "./util"
 
 export class BlocState<T = any> {
-  constructor(data: T) {
+  constructor(data: T, status = "initial" as "initial", error?: Error) {
     this.data = data
-    this.status = BlocStateStatus.initial
+    this.#status = status
+    this.#error = error
   }
 
-  status: BlocStateStatus
-  error?: Error
-  data: T
+  #status: BlocStateStatus
+
+  #error: Error | undefined
+
+  readonly #ctor = this.constructor as new (
+    data: T,
+    status?: BlocStateStatus,
+    error?: Error,
+  ) => this
+
+  get status() {
+    return this.#status
+  }
 
   readonly blocStateName = this.constructor.name
 
   readonly isBlocStateInstance = true
 
-  ready(copy?: ((data: T) => T) | ((data: Draft<T>) => void) | T): this {
-    const ctor = this.constructor as new (data: T) => this
-    const primitive = isPrimitive(this.data)
-    const copyExists = copy != null
+  get error() {
+    return this.#error
+  }
 
-    if (!copyExists && primitive) {
-      const newState = new ctor(this.data)
-      newState.status = BlocStateStatus.ready
-      return newState
-    } else if (!copyExists) {
-      const newState = new ctor(produce(this.data, () => {}))
-      newState.status = BlocStateStatus.ready
-      return newState
-    }
+  data: T
 
-    if (primitive && typeof copy === "function") {
-      const _copy = copy as (data: T) => T
-      const newState = new ctor(_copy(this.data))
-      newState.status = BlocStateStatus.ready
-      return newState
-    }
+  ready(data?: T | ((data: Draft<T>) => void)): this {
+    let newState: this
 
-    if (primitive) {
-      const data = copy as T
-      const newState = new ctor(data)
-      newState.status = BlocStateStatus.ready
-      return newState
+    if (data == null) {
+      newState = new this.#ctor(
+        produce(this.data, () => {}),
+        "ready",
+      )
+    } else if (typeof data === "function") {
+      const _data = data as (data: Draft<T>) => void
+      newState = new this.#ctor(produce(this.data, _data), "ready")
     } else {
-      const _copy = copy as (data: Draft<T>) => void
-      const newState = new ctor(produce(this.data, _copy))
-      newState.status = BlocStateStatus.ready
-      return newState
+      const _data = data as T
+      newState = new this.#ctor(_data, "ready")
     }
+
+    return newState
   }
 
   loading(): this {
-    const ctor = this.constructor as new (data: T) => this
-    const newState = new ctor(produce(this.data, () => {}))
-    newState.status = BlocStateStatus.loading
+    const newState = new this.#ctor(
+      produce(this.data, () => {}),
+      "loading",
+    )
     return newState
   }
 
   failed(error?: Error): this {
-    const ctor = this.constructor as new (data: T) => this
-    const newState = new ctor(produce(this.data, () => {}))
-    if (error) newState.error = error
-    newState.status = BlocStateStatus.failed
+    const newState = new this.#ctor(
+      produce(this.data, () => {}),
+      "failed",
+      error,
+    )
     return newState
   }
 }
