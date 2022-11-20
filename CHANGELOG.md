@@ -1,3 +1,18 @@
+# [2.0.0-beta.5](https://github.com/bloc-state/state/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2022-11-20)
+
+
+### Features
+
+* made entire State object an immerable object ([e02fb79](https://github.com/bloc-state/state/commit/e02fb796b5d541bdb0368b44dd1c3e1d8be69da3))
+
+
+### BREAKING CHANGES
+
+* BlocState class name has been changed to State to keep
+the name as generic as possible. State is also now marked with
+[immerable] symbol so that immer makes it draftable. State.ready method
+has been optimized with nested produce methods.
+
 # [2.0.0-beta.4](https://github.com/bloc-state/state/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2022-11-19)
 
 ### Features
