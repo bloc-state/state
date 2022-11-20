@@ -1,30 +1,28 @@
 # [2.0.0-beta.4](https://github.com/bloc-state/state/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2022-11-19)
 
-
 ### Features
 
-* made changes to handle encapsulation properly ([cbdc5f7](https://github.com/bloc-state/state/commit/cbdc5f7e767238b09131ad0146db5440ed3d392e))
-
-# [2.0.0-beta.3](https://github.com/bloc-state/state/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-11-17)
-
-
-### Bug Fixes
-
-* changed return type for BlocState methods ([f392305](https://github.com/bloc-state/state/commit/f3923058907a54d34e45043d044ec4cd0a83a271))
-* changed return type for BlocState methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
+- made changes to handle encapsulation properly ([cbdc5f7](https://github.com/bloc-state/state/commit/cbdc5f7e767238b09131ad0146db5440ed3d392e))
 
 # [2.0.0-beta.3](https://github.com/bloc-state/state/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-11-17)
 
 ### Bug Fixes
 
-- changed return type for BlocState methods ([b5583a8](https://github.com/bloc-state/state/commit/b5583a8c4089d846d39583eef2420bd877e773ec))
-- changed return type for BlocState methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
+- changed return type for State methods ([f392305](https://github.com/bloc-state/state/commit/f3923058907a54d34e45043d044ec4cd0a83a271))
+- changed return type for State methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
 
 # [2.0.0-beta.3](https://github.com/bloc-state/state/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-11-17)
 
 ### Bug Fixes
 
-- changed return type for BlocState methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
+- changed return type for State methods ([b5583a8](https://github.com/bloc-state/state/commit/b5583a8c4089d846d39583eef2420bd877e773ec))
+- changed return type for State methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
+
+# [2.0.0-beta.3](https://github.com/bloc-state/state/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-11-17)
+
+### Bug Fixes
+
+- changed return type for State methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
 
 # [2.0.0-beta.2](https://github.com/bloc-state/state/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2022-11-17)
 

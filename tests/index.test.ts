@@ -1,24 +1,26 @@
-import { isBlocStateInstance } from "../src"
+import { isStateInstance } from "../src"
 import { CounterState } from "./helpers/counter/counter.state"
 import { TodoState } from "./helpers/todo/todo.state"
 
-describe("BlocState", () => {
+describe("State", () => {
   let state: CounterState
 
   beforeEach(() => {
     state = new CounterState(0)
   })
 
-  describe("BlocState creation", () => {
+  describe("State creation", () => {
     it("should set state to initial", () => {
+      expect.assertions(3)
       expect(state).toBeInstanceOf(CounterState)
       expect(state.status).toBe("initial")
       expect(state.data).toBe(0)
     })
   })
 
-  describe("BlocState.ready", () => {
+  describe("State.ready", () => {
     it("should set state to ready", () => {
+      expect.assertions(17)
       const readyState = state.ready(state.data + 3)
       expect(readyState).toBeInstanceOf(CounterState)
       expect(readyState.status).toBe("ready")
@@ -26,11 +28,10 @@ describe("BlocState", () => {
       expect(readyState === state).toBe(false)
 
       const readyState2 = readyState.ready()
-      console.log(readyState2)
       expect(readyState2).toBeInstanceOf(CounterState)
       expect(readyState2.status).toBe("ready")
       expect(readyState2.data).toBe(3)
-      expect(readyState2 === readyState).toBe(false)
+      expect(readyState2 === readyState).toBe(true)
 
       const referenceTypeState = new TodoState({
         id: 0,
@@ -42,24 +43,27 @@ describe("BlocState", () => {
       expect(referenceTypeState.data.title).toBe("go to work")
 
       const referenceTypeState2 = referenceTypeState.ready()
-      expect(referenceTypeState !== referenceTypeState2)
-      expect(referenceTypeState2.data !== referenceTypeState.data)
+      expect(referenceTypeState === referenceTypeState2).toBe(false)
+      expect(referenceTypeState2.data === referenceTypeState.data).toBe(true)
 
       const primitiveState = state.ready(2)
       expect(primitiveState.data).toBe(2)
       expect(primitiveState.status).toBe("ready")
-      expect(primitiveState !== state).toBe(true)
+      expect(primitiveState === state).toBe(false)
 
-      const nonPrimitiveWithFunctionState = referenceTypeState.ready((todo) => {
+      const nonPrimitiveWithDraftState = referenceTypeState.ready((todo) => {
         todo.id = 5
       })
 
-      expect(nonPrimitiveWithFunctionState.data !== referenceTypeState.data)
+      expect(nonPrimitiveWithDraftState.data !== referenceTypeState.data).toBe(
+        true,
+      )
     })
   })
 
-  describe("BlocState.loading", () => {
+  describe("State.loading", () => {
     it("should set state to loading", () => {
+      expect.assertions(4)
       const loading = state.loading()
       expect(loading).toBeInstanceOf(CounterState)
       expect(loading.status).toBe("loading")
@@ -68,8 +72,9 @@ describe("BlocState", () => {
     })
   })
 
-  describe("BlocState.failed", () => {
+  describe("State.failed", () => {
     it("should set state to failed", () => {
+      expect.assertions(10)
       const failed = state.failed(new Error("operation has failed"))
       expect(failed).toBeInstanceOf(CounterState)
       expect(failed.error).toBeDefined()
@@ -86,12 +91,13 @@ describe("BlocState", () => {
     })
   })
 
-  describe("isBlocStateInstance function", () => {
-    it("should return true only if an object is an instance of BlocState", () => {
+  describe("isStateInstance function", () => {
+    it("should return true only if an object is an instance of State", () => {
+      expect.assertions(2)
       class Test {}
       const test = new Test()
-      expect(isBlocStateInstance(state)).toBe(true)
-      expect(isBlocStateInstance(test)).toBe(false)
+      expect(isStateInstance(state)).toBe(true)
+      expect(isStateInstance(test)).toBe(false)
     })
   })
 })
