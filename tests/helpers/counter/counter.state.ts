@@ -1,3 +1,3 @@
-import { BlocState } from "../../../src/state"
+import { State } from "../../../src/state"
 
-export class CounterState extends BlocState<number> {}
+export class CounterState extends State<number> {}

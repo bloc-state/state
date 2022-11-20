@@ -1,8 +1,8 @@
-import { BlocState } from "../../../src"
+import { State } from "../../../src"
 
 export type Todo = {
   id: number
   title: string
 }
 
-export class TodoState extends BlocState<Todo> {}
+export class TodoState extends State<Todo> {}

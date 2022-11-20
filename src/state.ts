@@ -1,74 +1,62 @@
-import produce, { Draft } from "immer"
-import { BlocStateStatus } from "./types"
+import produce, { Draft, immerable } from "immer"
+import { StateStatus } from "./types"
 
-export class BlocState<T = any> {
+export abstract class State<T = any> {
   constructor(data: T, status = "initial" as "initial", error?: Error) {
     this.data = data
-    this.#status = status
-    this.#error = error
+    this.status = status
+    this.error = error
   }
 
-  #status: BlocStateStatus
+  [immerable] = true
 
-  #error: Error | undefined
+  readonly status: StateStatus
 
-  readonly #ctor = this.constructor as new (
-    data: T,
-    status?: BlocStateStatus,
-    error?: Error,
-  ) => this
+  readonly error: Error | undefined
 
-  get status() {
-    return this.#status
-  }
+  readonly StateName = this.constructor.name
 
-  readonly blocStateName = this.constructor.name
-
-  readonly isBlocStateInstance = true
-
-  get error() {
-    return this.#error
-  }
+  readonly isStateInstance = true
 
   data: T
 
   ready(data?: T | ((data: Draft<T>) => void)): this {
-    let newState: this
-
     if (data == null) {
-      newState = new this.#ctor(
-        produce(this.data, () => {}),
-        "ready",
-      )
+      return produce(this, (draft) => {
+        draft.status = "ready"
+        draft.data = produce(draft.data, () => {})
+      })
     } else if (typeof data === "function") {
       const _data = data as (data: Draft<T>) => void
-      newState = new this.#ctor(produce(this.data, _data), "ready")
+      return produce(this, (draft) => {
+        draft.status = "ready"
+        draft.data = produce(draft.data, _data)
+      })
     } else {
-      const _data = data as T
-      newState = new this.#ctor(_data, "ready")
+      const _data = data as Draft<T>
+      return produce(this, (draft) => {
+        draft.status = "ready"
+        draft.data = _data
+      })
     }
-
-    return newState
   }
 
   loading(): this {
-    const newState = new this.#ctor(
-      produce(this.data, () => {}),
-      "loading",
-    )
-    return newState
+    return produce(this, (draft) => {
+      draft.status = "loading"
+      draft.data = produce(draft.data, () => {})
+    })
   }
 
   failed(error?: Error): this {
-    const newState = new this.#ctor(
-      produce(this.data, () => {}),
-      "failed",
-      error,
-    )
-    return newState
+    return produce(this, (draft) => {
+      draft.status = "failed"
+      draft.error = error
+      draft.data = produce(draft.data, () => {})
+    })
   }
 }
 
-export const isBlocStateInstance = (state: any): state is BlocState => {
-  return state instanceof BlocState || Boolean(state.isBlocStateInstance)
+export const isStateInstance = (state: any): state is State => {
+  return state instanceof State || Boolean(state.isStateInstance)
 }
