@@ -4,35 +4,16 @@
 ### Bug Fixes
 
 * changed return type for BlocState methods ([dc3122b](https://github.com/bloc-state/state/commit/dc3122b862a9757a3bcd1a1b734fa49719608148))
-* changed return type for BlocState methods ([6204fd4](https://github.com/bloc-state/state/commit/6204fd499d8f879c3086a7fda65d3e2ad75b827c))
-* changed return type for BlocState methods ([f392305](https://github.com/bloc-state/state/commit/f3923058907a54d34e45043d044ec4cd0a83a271))
-* changed return type for BlocState methods ([4e0e74b](https://github.com/bloc-state/state/commit/4e0e74b9becd4da5b038fb176c9a783e5a986e99))
-
 
 ### Features
 
 * added new type argument to ready method ([86699af](https://github.com/bloc-state/state/commit/86699afc66b956767f8d58d72bcd8dba754fe908))
-* added new type argument to ready method ([2fa794f](https://github.com/bloc-state/state/commit/2fa794f4272fdc37d06470ef28ae959d7d575331))
 * made changes to handle encapsulation properly ([89db95a](https://github.com/bloc-state/state/commit/89db95a98aa120f7f530b524e8e91705bf1545ae))
-* made changes to handle encapsulation properly ([cbdc5f7](https://github.com/bloc-state/state/commit/cbdc5f7e767238b09131ad0146db5440ed3d392e))
 * made entire State object an immerable object ([12fd431](https://github.com/bloc-state/state/commit/12fd431417b61c725b2294b28d4eade25f366126))
-* made entire State object an immerable object ([e02fb79](https://github.com/bloc-state/state/commit/e02fb796b5d541bdb0368b44dd1c3e1d8be69da3))
 * updated API ([af51be3](https://github.com/bloc-state/state/commit/af51be358a1ec724be511302cef1d9a841756bc6))
-* updated API ([f3a26c1](https://github.com/bloc-state/state/commit/f3a26c17ca77a32129b2a8403a9374cc8969abdb))
-
 
 ### BREAKING CHANGES
 
-* BlocState class name has been changed to State to keep
-the name as generic as possible. State is also now marked with
-[immerable] symbol so that immer makes it draftable. State.ready method
-has been optimized with nested produce methods.
-* State will now have a new property named status to identify its
-        finite state, immer will now be integrated into the library and is now a
-        hard dependency. State will no longer use static factory methods.
-        Instantiating a state instance will set it to intial status. New state
-        instances can be created using prototype methods on a state instance [ready, failed,
-        loading]. These 3 methods will return a new immutable state instance.
 * BlocState class name has been changed to State to keep
 the name as generic as possible. State is also now marked with
 [immerable] symbol so that immer makes it draftable. State.ready method
