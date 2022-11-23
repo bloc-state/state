@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/bloc-state/state/compare/v2.0.0...v2.0.1) (2022-11-23)
+
+
+### Bug Fixes
+
+* **state:** property name must be lowercase ([1e8dccb](https://github.com/bloc-state/state/commit/1e8dccb50cb22ba0fc09794cfb1f79a8788449f7))
+
 # [2.0.0](https://github.com/bloc-state/state/compare/v1.0.4...v2.0.0) (2022-11-22)
 
 
