@@ -14,7 +14,7 @@ export abstract class State<T = any> {
 
   readonly error: Error | undefined
 
-  readonly StateName = this.constructor.name
+  readonly stateName = this.constructor.name
 
   readonly isStateInstance = true
 
