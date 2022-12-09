@@ -11,10 +11,11 @@ describe("State", () => {
 
   describe("State creation", () => {
     it("should set state to initial", () => {
-      expect.assertions(3)
+      expect.assertions(4)
       expect(state).toBeInstanceOf(CounterState)
       expect(state.status).toBe("initial")
       expect(state.data).toBe(0)
+      expect(state.error).toBeUndefined()
     })
   })
 
@@ -88,6 +89,66 @@ describe("State", () => {
       expect(failed2.error?.message).toBeUndefined()
       expect(failed2.data).toBe(failed.data)
       expect(failed2 === failed).toBe(false)
+    })
+
+    it("should set error to undefined when transitioning from failed state with error", () => {
+      expect.assertions(7)
+      const failed = state.failed(new Error("operation has failed"))
+      expect(failed).toBeInstanceOf(CounterState)
+      expect(failed.error).toBeDefined()
+      expect(failed?.error?.message).toBe("operation has failed")
+
+      const readyState = failed.ready()
+      expect(readyState.error).toBeUndefined()
+      expect(readyState.data).toBe(0)
+
+      const loadingState = failed.loading()
+      expect(loadingState.error).toBeUndefined()
+      expect(loadingState.data).toBe(0)
+    })
+  })
+
+  describe("State.copyWith", () => {
+    it("should perform immer produce for the entire state object", () => {
+      enum CustomTodoStatus {
+        todoLoading,
+        todoSuccess,
+      }
+      class CustomTodoState extends TodoState {
+        customStatus = CustomTodoStatus.todoLoading
+      }
+
+      const customState = new CustomTodoState({
+        id: 0,
+        title: "custom title",
+      })
+
+      expect(customState.status).toBe("initial")
+      expect(customState.customStatus).toBe(CustomTodoStatus.todoLoading)
+
+      const customStateLoading = customState.copyWith((state) => {
+        state.customStatus = CustomTodoStatus.todoLoading
+      })
+
+      expect(customState === customStateLoading).toBe(true)
+
+      const customStateSuccess = customStateLoading.copyWith((state) => {
+        state.customStatus = CustomTodoStatus.todoSuccess
+      })
+
+      expect(customStateSuccess === customStateLoading).toBe(false)
+      expect(customStateSuccess.data === customStateLoading.data).toBe(true)
+
+      const customStateSuccessWithNewData = customStateSuccess.copyWith(
+        (state) => {
+          state.data.id = 2
+        },
+      )
+
+      expect(customStateSuccessWithNewData === customStateSuccess).toBe(false)
+      expect(
+        customStateSuccessWithNewData.data === customStateSuccess.data,
+      ).toBe(false)
     })
   })
 
