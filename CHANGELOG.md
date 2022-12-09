@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/bloc-state/state/compare/v2.1.0...v2.1.1) (2022-12-09)
+
+
+### Bug Fixes
+
+* **tsup:** added keepNames to build config ([567d885](https://github.com/bloc-state/state/commit/567d88594e92c0976893cb493184d29ab52533b0))
+
 # [2.1.0](https://github.com/bloc-state/state/compare/v2.0.1...v2.1.0) (2022-12-09)
 
 
