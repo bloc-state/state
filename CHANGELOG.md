@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/bloc-state/state/compare/v2.0.1...v2.1.0) (2022-12-09)
+
+
+### Features
+
+* added copyWith method ([2f86f5d](https://github.com/bloc-state/state/commit/2f86f5dfa555aae54a205fb0b57bb252e5654424))
+
 ## [2.0.1](https://github.com/bloc-state/state/compare/v2.0.0...v2.0.1) (2022-11-23)
 
 
