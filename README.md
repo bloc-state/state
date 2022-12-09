@@ -181,7 +181,7 @@ console.log(postDetailsState.data === postDetailsLoadingState.data) // true, dat
 
 console.log(Object.isFrozen(postDetailsLoadingState)) // true, all objects returned from factory methods are read-only, and cannot be mutated
 
-console.log(postDetailsLoadingState instanceof CounterState) // true, prototype chains remain intact
+console.log(postDetailsLoadingState instanceof PostDetailsState) // true, prototype chains remain intact
 
 const postDetailsReadyState = postDetailsLoadingState.ready((viewModel) => {
   viewModel.details.title = "title has been changed"
