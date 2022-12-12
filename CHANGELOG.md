@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/bloc-state/state/compare/v2.1.1...v2.1.2) (2022-12-12)
+
+
+### Bug Fixes
+
+* **dep:** make immer a dependency instad of peerDependency ([86d3b36](https://github.com/bloc-state/state/commit/86d3b3628f3b3c980c1dd93d148f46e4458e1ebc))
+
 ## [2.1.1](https://github.com/bloc-state/state/compare/v2.1.0...v2.1.1) (2022-12-09)
 
 
