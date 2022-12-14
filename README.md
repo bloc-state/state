@@ -11,10 +11,8 @@
 
 ## Installation
 
-### `immer` is a `peerDependency`
-
 ```
-npm install @bloc-state/state immer
+npm install @bloc-state/state
 ```
 
 ## Quickstart
@@ -24,22 +22,33 @@ import { State } from "@bloc-state/state"
 
 class CounterState extends State<number> {} // class declaration for our state
 
-/** State instances have factory methods that return new objects with one of 4 finite states
+/** State instances have a status property that represents a finite state it can be in
+ * 
+ * initial
  * loading 
  * ready, 
  * failed
  * 
- new instances are always created with initial status */
+ * 
+ new instances are always created with initial status
 
+  */
+
+// instantiate the State object
 const counter = new CounterState(0)
 
 console.log(counter.status === "initial") // true
+
+/*
+ use the previous state object to create a new state object by invoking their factory methods, each method uses 
+ immers' produce under the hood so you will always have new immutable state objects
+ */
 
 const loading = counter.loading() // loading.status === "loading"
 const ready = loading.ready(10) // ready.status === "ready"
 const failed = ready.failed() // failed.status === "failed"
 
-// data stays encapsulated between transitions
+// data is always copied between transitions
 console.log(failed.data) // 10
 
 const error = new Error("Counter Exception: something bad has happened")
@@ -53,6 +62,7 @@ console.log(failed)
 console.log(failedWithError)
 
 /**
+ * immer metadata omitted for clarity
  
 {
   "stateName": "CounterState",
@@ -96,126 +106,133 @@ console.log(failedWithError)
  */
 ```
 
-## Practical Example
+## Instantiate State Objects
 
 ```ts
-// domain/model/postDetails.ts
-
-type PostDetails = {
-  by: string
-  descendants?: number
-  id: number
-  kids?: number[]
-  parent: number
-  score?: number
-  text?: string
-  time: number
-  title?: string
-  type: "comment" | "story"
-  url?: string
+class SomeComplexState extends State<ComplexViewModel> {
+  // provide intial data to super here
+  constructor() {
+    super({
+      id: 0,
+      followers: [],
+      following: [],
+      likes: [],
+      ....,
+      ......
+    })
+  }
 }
 
-// presentation/model/postDetailsViewModel.ts
+const state = new SomeComplexState()
 
-type PostDetailsViewModel = {
-  details: PostDetails
-}
+// or optionally provide the intial data with default constructor
 
-// presentation/store/state/postDetailsState.ts
+// no super call, javascript will pass arguments to super implicitly
+class SomeComplexState extends State<ComplexViewModel> {}
 
-class PostDetailsState extends State<PostDetailsViewModel> {}
-
-const initial: PostDetailsViewModel = {
-  details: {
-    by: "",
-    time: 0,
-    type: "comment" as "comment",
-  },
-}
-
-const postDetailsState = new PostDetailsState(initial)
-
-console.log(postDetailsState) // initial state
-
-/**
-  
-{
-  "StateName": "PostDetailsState",
-  "isStateInstance": true,
-  "data": {
-    "details": {
-      "by": "",
-      "time": 0,
-      "type": "comment"
-    }
-  },
-  "status": "initial"
-}
-
- */
-
-const postDetailsLoadingState = postDetailsState.loading()
-
-console.log(postDetailsLoadingState)
-
-/**
-  
-{
-  "StateName": "PostDetailsState",
-  "isStateInstance": true,
-  "data": {
-    "details": {
-      "by": "",
-      "time": 0,
-      "type": "comment"
-    }
-  },
-  "status": "loading"
-}
-
- */
-
-console.log(postDetailsState === postDetailsLoadingState) // false, objects have different status (initial, loading)
-
-console.log(postDetailsState.data === postDetailsLoadingState.data) // true, data didn't change
-
-console.log(Object.isFrozen(postDetailsLoadingState)) // true, all objects returned from factory methods are read-only, and cannot be mutated
-
-console.log(postDetailsLoadingState instanceof PostDetailsState) // true, prototype chains remain intact
-
-const postDetailsReadyState = postDetailsLoadingState.ready((viewModel) => {
-  viewModel.details.title = "title has been changed"
+const state = new SomeComplexState({
+  id: 0,
+  followers: [],
+  following: [],
+  likes: [],
+  ....,
+  ......
 })
 
-console.log(postDetailsReadyState)
 
-/**
-  
-{
-  "StateName": "PostDetailsState",
-  "isStateInstance": true,
-  "data": {
-    "details": {
-      "by": "",
-      "time": 0,
-      "type": "comment",
-      "title": "title has been changed"
-    }
-  },
-  "status": "ready"
+// usage with a reducer
+const someReducer = (state = new SomeComplexState(), action) => {
+  if (action.type === "fetchComplexState") {
+    return state.loading()
+  }
+
+  if (action.type === "fetchComplexStateSuccess") {
+    return state.ready((draft: WritableDraft<ComplexViewModel>) => {
+      draft.followers = action.payload.followers
+      draft.likes = action.payload.likes
+      ....
+      ....
+    })
+  }
 }
 
+```
+
+## copyWith
+
+If you don't want to use the `loading`, `ready`, or `failed` methods. Or perhaps you are managing a more complex state object.
+Use the `copyWith` method insted.
+
+`copyWith` will copy the entire state object, not just the data unlike the `ready` method
+
+```ts
+type ProfileViewModel = {
+  id: number
+  name: string
+  email: string
+  followers: string[]
+}
+
+enum ProfileFollowersStatus {
+  loading,
+  success,
+  failure,
+}
+
+class ProfileState extends State<ProfileViewModel> {
+  followerStatus = ProfileFollowersStatus.loading
+
+  constructor() {
+    super({
+      id: 0,
+      name: "",
+      email: "",
+      followers: [],
+    })
+  }
+}
+
+const profileState = new ProfileState()
+
+console.log(profileState)
+
+/* 
+ ProfileState {
+    stateName: 'ProfileState',
+    isStateInstance: true,
+    data: { id: 0, name: '', email: '', followers: [] },
+    status: 'initial',
+    error: undefined,
+    followerStatus: 0,
+    [Symbol(immer-draftable)]: true
+  }
+  */
+
+const followersSuccessState = profileState.copyWith(
+  (state: WritableDraft<ProfileState>) => {
+    state.followerStatus = ProfileFollowersStatus.success
+    state.data.followers = ["Jill", "Bobby", "Nancy"]
+  },
+)
+
+console.log(followersSuccessState)
+
+/*
+ ProfileState {
+    stateName: 'ProfileState',
+    isStateInstance: true,
+    data: {
+      id: 0,
+      name: '',
+      email: '',
+      followers: [ 'Jill', 'Bobby', 'Nancy' ]
+    },
+    status: 'initial',
+    error: undefined,
+    followerStatus: 1,
+    [Symbol(immer-draftable)]: true
+  }
  */
-
-console.log(postDetailsReadyState === postDetailsLoadingState) // false, data was changed so new state is emitted
-
-console.log(postDetailsReadyState.data === postDetailsLoadingState.data) // false, data was changed so new state is emitted
-
-console.log(
-  postDetailsReadyState.data.details === postDetailsLoadingState.data.details,
-) // false, data was changed so new state is emitted
-
-console.log(postDetailsReadyState === postDetailsReadyState.ready()) // true, state didn't change
 ```
 
 ## License
