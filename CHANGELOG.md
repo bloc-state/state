@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/bloc-state/state/compare/v2.1.2...v2.1.3) (2022-12-14)
+
+
+### Bug Fixes
+
+* **docs:** update README ([3870a02](https://github.com/bloc-state/state/commit/3870a0285d49dc6bce55d2fb61fa89a4505248fe))
+
 ## [2.1.2](https://github.com/bloc-state/state/compare/v2.1.1...v2.1.2) (2022-12-12)
 
 
