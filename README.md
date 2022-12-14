@@ -1,9 +1,8 @@
 # @bloc-state/state
 
-![Codecov](https://badgen.net/npm/v/@bloc-state/state?color=black)
-![Codecov](https://badgen.net/bundlephobia/minzip/@bloc-state/state?color=black)
-![Codecov](https://badgen.net/codecov/c/github/bloc-state/state?color=black)
-![Codecov](https://badgen.net/npm/license/@bloc-state/state?color=black)
+[![npm version](https://badgen.net/npm/v/@bloc-state/state?color=black)](https://npm.im/@bloc-state/state)
+[![Codecov](https://badgen.net/codecov/c/github/bloc-state/state?color=black)](https://app.codecov.io/gh/bloc-state/state)
+[![Codecov](https://badgen.net/npm/license/@bloc-state/state?color=black)](https://raw.githubusercontent.com/bloc-state/state/main/LICENSE)
 
 ## Introduction
 
@@ -39,10 +38,7 @@ const counter = new CounterState(0)
 
 console.log(counter.status === "initial") // true
 
-/*
- use the previous state object to create a new state object by invoking their factory methods, each method uses 
- immers' produce under the hood so you will always have new immutable state objects
- */
+// use the previous state object to create a new state object
 
 const loading = counter.loading() // loading.status === "loading"
 const ready = loading.ready(10) // ready.status === "ready"
@@ -160,7 +156,7 @@ const someReducer = (state = new SomeComplexState(), action) => {
 
 ## copyWith
 
-If you don't want to use the `loading`, `ready`, or `failed` methods. Or perhaps you are managing a more complex state object.
+If you are managing a more complex state object.
 Use the `copyWith` method insted.
 
 `copyWith` will copy the entire state object, not just the data unlike the `ready` method
