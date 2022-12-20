@@ -1,3 +1,10 @@
+## [2.1.4](https://github.com/bloc-state/state/compare/v2.1.3...v2.1.4) (2022-12-14)
+
+
+### Bug Fixes
+
+* **docs:** fix badges in README ([5f4b7a1](https://github.com/bloc-state/state/commit/5f4b7a1639df84f81c4cca4bda7913c7b5d82cf2))
+
 ## [2.1.3](https://github.com/bloc-state/state/compare/v2.1.2...v2.1.3) (2022-12-14)
 
 
