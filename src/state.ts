@@ -1,8 +1,15 @@
 import produce, { Draft, immerable } from "immer"
 import { StateStatus } from "./types"
+import { BaseState } from "./base-state"
 
-export abstract class State<Data = any> {
-  constructor(data: Data, status = "initial" as "initial", error?: Error) {
+export abstract class State<Data = any> extends BaseState {
+  constructor(
+    data: Data,
+    name?: string,
+    status = "initial" as "initial",
+    error?: Error,
+  ) {
+    super(name)
     this.data = data
     this.status = status
     this.error = error
@@ -13,8 +20,6 @@ export abstract class State<Data = any> {
   readonly status: StateStatus
 
   readonly error: Error | undefined
-
-  readonly stateName = this.constructor.name
 
   readonly isStateInstance = true
 
@@ -45,10 +50,6 @@ export abstract class State<Data = any> {
         draft.data = _data
       })
     }
-  }
-
-  copyWith(draft: (state: Draft<this>) => void): this {
-    return produce(this, draft)
   }
 
   loading(): this {
