@@ -152,6 +152,15 @@ describe("State", () => {
     })
   })
 
+  describe("State.stateName", () => {
+    it("should accept an optional name that can be used instead of constructor name", () => {
+      expect.assertions(2)
+      const specialState = new CounterState(0, "SpecialCounterState")
+      expect(state.stateName).toBe("CounterState")
+      expect(specialState.stateName).toBe("SpecialCounterState")
+    })
+  })
+
   describe("isStateInstance function", () => {
     it("should return true only if an object is an instance of State", () => {
       expect.assertions(2)
