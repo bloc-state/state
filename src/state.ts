@@ -2,7 +2,7 @@ import produce, { Draft, immerable } from "immer"
 import { StateStatus } from "./types"
 import { BaseState } from "./base-state"
 
-export abstract class State<Data = any> extends BaseState {
+export abstract class State<Data = unknown> extends BaseState {
   constructor(
     data: Data,
     name?: string,
