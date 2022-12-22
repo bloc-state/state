@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/bloc-state/state/compare/v2.1.4...v2.2.0) (2022-12-20)
+
+
+### Features
+
+* added BaseState and optional name property ([9d49f22](https://github.com/bloc-state/state/commit/9d49f22b9c59f40211d4787915009279fe9865a8))
+
 ## [2.1.4](https://github.com/bloc-state/state/compare/v2.1.3...v2.1.4) (2022-12-14)
 
 
