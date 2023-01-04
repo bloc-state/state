@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/bloc-state/state/compare/v2.2.0...v2.2.1) (2022-12-22)
+
+
+### Bug Fixes
+
+* **State:** replace any with unknown type ([e58e8b4](https://github.com/bloc-state/state/commit/e58e8b4e537925dbc10a7b578a327631fc627bbd))
+
 # [2.2.0](https://github.com/bloc-state/state/compare/v2.1.4...v2.2.0) (2022-12-20)
 
 
